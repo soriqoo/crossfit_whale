@@ -1,1 +1,16 @@
+# Profile
+spring:
+  profiles:
+    active: local
+    group:
+      local: logging-type-console, logging-level-local
+      dev: logging-type-file, logging-level-dev
+  jpa:
+    hibernate:
+      ddl-auto: none    # create같은 설정의 경우 schema.sql , data.sql 사용하여 JPA DB 생성
+  datasource:
+    url: jdbc:postgresql://localhost:15432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: test
+    password: test123   # TODO : 직접 사용하지 않도록 수정 필요
 

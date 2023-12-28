@@ -1,6 +1,33 @@
 package com.crossfit.whale.entity
 
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.Table
+import java.sql.Date
 
-class WodEntity {
+@Entity
+@Table(name = "wod")
+class Wod (
+    name: String,
+    type: Char,
+    category: String,
+    content: String?,
+    date: Date
+): PrimaryKeyEntity() {
 
+    @Column(nullable = false)
+    var wodName: String = name
+        protected set
+
+    @Column(nullable = false)
+    var wodType: Char = type
+
+    @Column(nullable = false)
+    var wodCategory: String = category
+
+    @Column(nullable = true)
+    var wodContent: String? = content
+
+    @Column(nullable = false)
+    var wodDate: Date = date
 }
