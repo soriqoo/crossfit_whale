@@ -49,7 +49,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.github.f4b6a3:ulid-creator:5.2.2")  // for make ulid
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")  // for make ulid
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")  // for serialization
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")

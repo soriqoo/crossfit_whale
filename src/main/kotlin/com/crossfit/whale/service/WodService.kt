@@ -18,22 +18,22 @@ class WodService(
     }
 
     @Transactional
-    fun delete(id: UUID) {
-        wodRepository.deleteById(id)
+    fun deleteWod(wodDate: Date, wodType: Char) {
+        wodRepository.deleteByWodDateAndWodType(wodDate, wodType)
     }
 
-    fun getTodayWods(wodDate: Date) : List<Wod>? {
+    fun getWods(wodDate: Date) : List<Wod>? {
         return wodRepository.findAllByWodDate(wodDate)
     }
 
 }
 
 data class WodCreationCommand(
-    val name: String,
-    val type: Char,
-    val category: String,
-    val content: String?,
-    val date: String?
+    val wodName: String,
+    val wodType: Char,
+    val wodCategory: String,
+    val wodContent: String?,
+    val wodDate: String?
 ) {
-    fun toEntity() = Wod(name, type, category, content, Date.valueOf(date))
+    fun toEntity() = Wod(wodName, wodType, wodCategory, wodContent, Date.valueOf(wodDate))
 }
