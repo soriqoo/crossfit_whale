@@ -1,5 +1,6 @@
 package com.crossfit.whale.entity
 
+import com.crossfit.whale.service.WodCreationCommand
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
@@ -30,4 +31,13 @@ class Wod (
 
     @Column(nullable = false)
     var wodDate: Date = date
+
+    // for Update
+    fun updateWod(command: WodCreationCommand) {
+        this.wodName = command.wodName
+        this.wodType = command.wodType
+        this.wodCategory = command.wodCategory
+        this.wodContent = command.wodContent
+        this.wodDate = Date.valueOf(command.wodDate)
+    }
 }

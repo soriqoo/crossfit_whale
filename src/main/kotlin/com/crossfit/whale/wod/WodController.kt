@@ -5,13 +5,10 @@ import com.crossfit.whale.entity.Wod
 import com.crossfit.whale.service.WodCreationCommand
 import com.crossfit.whale.service.WodService
 import jakarta.validation.Valid
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import java.sql.Date
 import java.time.LocalDate
-import java.util.UUID
 
 @RestController
 @RequestMapping("/wod")
@@ -21,24 +18,35 @@ class WodController (
 
     private val log = LoggerFactory.getLogger(WodController::class.java)
 
-    // WOD 등록
+    /**
+     *  - WOD 등록
+     */
     @PostMapping("/wods")
     fun createWod(@RequestBody @Valid command: WodCreationCommand): WodDto =
-        WodDto(wodService.create(command))
+        WodDto(wodService.createWod(command))
 
 
-    // 오늘의 WOD 가져오기. WOD 등록 시점에 따라 None, Crossfit, Dietfit, C/Dfit
+    /**
+     *  - 오늘의 WOD 가져오기. WOD 등록 시점에 따라 None, Crossfit, Dietfit, C/Dfit
+     */
     @GetMapping("/today")
     fun getTodayWodList(): List<Wod>? =
-        wodService.getWods(Date.valueOf(LocalDate.now()))
+        wodService.getWodList(Date.valueOf(LocalDate.now()))
 
 
-    // 특정 날짜 WOD 가져오기
+    /**
+     *  - 특정 날짜 WOD 가져오기
+     */
     @GetMapping("/{wodDate}")
     fun getWodList(@PathVariable wodDate: LocalDate): List<Wod>? =
-        wodService.getWods(Date.valueOf(wodDate))
+        wodService.getWodList(Date.valueOf(wodDate))
 
-
+    /**
+     *  - 특정 날짜 WOD 수정
+     */
+    @PutMapping("/{wodDate}/{wodType}")
+    fun updateWod(@PathVariable wodDate: LocalDate, @PathVariable wodType: Char, @RequestBody @Valid command: WodCreationCommand): WodDto =
+        WodDto(wodService.updateWod(Date.valueOf(wodDate), wodType, command))
 
     /**
         - WOD 삭제
@@ -49,7 +57,7 @@ class WodController (
         3. DB에서 WOD 삭제
 
         R : 성공/실패 Code
-     **/
+     */
     @DeleteMapping("/{wodDate}/{wodType}")
     fun deleteWod(@PathVariable wodDate: LocalDate, @PathVariable wodType: Char): CommonResponse {
         wodService.deleteWod(Date.valueOf(wodDate), wodType)

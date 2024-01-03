@@ -12,6 +12,9 @@ public interface WodRepository : JpaRepository<Wod?, UUID?> {   // Spring Data E
 
     fun findAllByWodDate(wodDate: Date): List<Wod>?
 
+    @Query("select w from Wod w where w.wodDate = :wodDate and w.wodType = :wodType")
+    fun findByWodDateAndWodType(wodDate: Date, wodType: Char): Wod
+
 
     @Transactional
     @Modifying

@@ -5,7 +5,6 @@ import com.crossfit.whale.repository.WodRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.sql.Date
-import java.util.UUID
 
 @Service
 class WodService(
@@ -13,8 +12,16 @@ class WodService(
 ) {
 
     @Transactional
-    fun create(command: WodCreationCommand) : Wod {
+    fun createWod(command: WodCreationCommand) : Wod {
         return wodRepository.save(command.toEntity())
+    }
+
+    @Transactional
+    fun updateWod(wodDate: Date, wodType: Char, command: WodCreationCommand) : Wod {
+        val findWod = wodRepository.findByWodDateAndWodType(wodDate, wodType)
+        findWod.updateWod(command)
+
+        return findWod
     }
 
     @Transactional
@@ -22,7 +29,7 @@ class WodService(
         wodRepository.deleteByWodDateAndWodType(wodDate, wodType)
     }
 
-    fun getWods(wodDate: Date) : List<Wod>? {
+    fun getWodList(wodDate: Date) : List<Wod>? {
         return wodRepository.findAllByWodDate(wodDate)
     }
 
